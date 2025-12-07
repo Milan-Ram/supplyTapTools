@@ -1,8 +1,6 @@
 "use client";
-import Image from "next/image";
-import ProductCard from "../components/ProductCard";
+
 import { useState } from "react";
-import { colors } from "@/styles/colors";
 import Hero from "@/components/Hero";
 import ProductsSection from "./products/page";
 import WhyChoose from "@/components/USPSection";

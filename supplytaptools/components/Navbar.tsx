@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { colors } from "@/styles/colors";
+import Link from "next/link";
 
 interface NavLink {
   name: string;
@@ -12,8 +13,8 @@ const navLinks: NavLink[] = [
   { name: "Home", href: "#home" },
   { name: "Products", href: "#products" },
   { name: "About", href: "#about" },
-  { name: "Contact", href: "#contact" },
-  { name: "Support", href: "#support" },
+  { name: "Contact", href: "/contact" },
+  { name: "Support", href: "#footer" },
 ];
 
 export default function Navbar() {
@@ -34,34 +35,28 @@ export default function Navbar() {
   const toggleTheme = () => setIsDark(!isDark);
 
   return (
-    <div className={isDark ? "dark" : ""}>
+    <div className={isDark ? "white" : ""}>
       <nav
         className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-          scrolled
-            ? isDark
-              ? "bg-slate-900 shadow-lg"
-              : "bg-white  shadow-lg"
-            : "bg-transparent"
+          scrolled ? (isDark ? "shadow-lg" : "shadow-lg") : "bg-transparent"
         }`}
         style={{
-          backgroundColor: scrolled
-            ? isDark
-              ? colors.dark
-              : colors.white
-            : "transparent",
+          backgroundColor: "rgba(0,0,0,0.55)", // ★ Transparent Yellow on Scroll
+
+          backdropFilter: scrolled ? "blur(6px)" : "none",
         }}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
             <div className="flex-shrink-0 flex items-center gap-2">
-              <a href="#">
+              <Link href="/">
                 <img
-                  src="/logo1.png" // ← your logo file in /public/logo.png
+                  src="/logo1.png"
                   alt="SupplyTap Logo"
                   className="h-10 w-auto"
                 />
-              </a>
+              </Link>
 
               <a
                 href="#"
@@ -71,7 +66,7 @@ export default function Navbar() {
                     scrolled || isOpen
                       ? isDark
                         ? colors.white
-                        : colors.dark
+                        : colors.white
                       : colors.white,
                 }}
               >
@@ -92,7 +87,7 @@ export default function Navbar() {
                       scrolled || isOpen
                         ? isDark
                           ? colors.light
-                          : colors.gray
+                          : colors.white
                         : colors.white,
                   }}
                 >
@@ -132,7 +127,7 @@ export default function Navbar() {
                   color: scrolled
                     ? isDark
                       ? colors.white
-                      : colors.dark
+                      : colors.white
                     : colors.white,
                 }}
               >
@@ -148,7 +143,7 @@ export default function Navbar() {
             isOpen ? "max-h-96 opacity-100" : "max-h-0 opacity-0"
           }`}
           style={{
-            backgroundColor: isDark ? colors.dark : colors.white,
+            backgroundColor: isDark ? colors.white : "rgba(255,255,0,0.25)",
           }}
         >
           <div className="px-4 pt-2 pb-4 space-y-2">
@@ -162,7 +157,7 @@ export default function Navbar() {
                 }}
                 className="block px-4 py-3 rounded-lg text-base font-medium transition-all duration-300 hover:translate-x-2"
                 style={{
-                  color: isDark ? colors.light : colors.gray,
+                  color: isDark ? colors.light : colors.white,
                   backgroundColor:
                     activeLink === link.name
                       ? isDark

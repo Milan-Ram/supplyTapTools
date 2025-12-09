@@ -73,7 +73,8 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative w-full overflow-hidden bg-black rounded-t-3xl "
+      id="footer"
+      className="relative w-full overflow-hidden bg-black rounded-t-3xl mt-10 "
       // style={{ backgroundColor: colors.darker }}
     >
       {/* Animated Background */}

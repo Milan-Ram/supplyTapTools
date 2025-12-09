@@ -1,92 +1,97 @@
 "use client";
 
-import { colors } from "@/styles/colors";
 import { Star } from "lucide-react";
+import { colors } from "@/styles/colors";
 
-const reviews = [
-  {
-    name: "Rahul Verma",
-    review:
-      "The drill machine I bought was top-notch quality. SupplyTap Tools has genuinely impressive durability and packaging.",
-    rating: 5,
-    location: "Mumbai, India",
-  },
-  {
-    name: "Kiran Hardware Mart",
-    review:
-      "We ordered in bulk and the service was extremely smooth. Fast delivery and great customer support. Highly recommended!",
-    rating: 5,
-    location: "Ahmedabad, Gujarat",
-  },
-  {
-    name: "Sunil Construction Co.",
-    review:
-      "Tools are high quality and reliable. Perfect for professional use. Customer service is also excellent!",
-    rating: 4,
-    location: "Pune, Maharashtra",
-  },
-];
+export default function TestimonialsSection() {
+  const testimonials = [
+    {
+      name: "Rohit S.",
+      role: "Factory Supervisor",
+      review:
+        "SupplyTap Tools has drastically improved our workflow. The tools are durable and perform consistently under pressure.",
+      rating: 5,
+    },
+    {
+      name: "Meera P.",
+      role: "Procurement Manager",
+      review:
+        "Reliable quality and fast delivery every time. Their product range is exactly what industries like ours need.",
+      rating: 5,
+    },
+    {
+      name: "Karan V.",
+      role: "Workshop Owner",
+      review:
+        "Great build quality and competitive pricing. SupplyTap Tools has become our go-to supplier for industrial equipment.",
+      rating: 5,
+    },
+  ];
 
-export default function Reviews() {
   return (
-    <section
-      className="py-16 px-4 sm:px-6 lg:px-8"
-      style={{ backgroundColor: colors.light }}
-    >
-      <div className="max-w-6xl mx-auto text-center mb-12">
+    <section style={{ backgroundColor: colors.white }} className="py-20 px-6">
+      <div className="max-w-6xl mx-auto text-center">
+        {/* Subtitle */}
+        <p
+          className="text-sm tracking-wide mb-2 font-medium"
+          style={{ color: colors.gray }}
+        >
+          TRUSTED BY INDUSTRY PROFESSIONALS
+        </p>
+
+        {/* Title */}
         <h2
-          className="text-3xl sm:text-4xl font-bold"
+          className="text-4xl md:text-5xl font-extrabold mb-14 tracking-tight"
           style={{ color: colors.dark }}
         >
-          What Our Customers Say
+          CUSTOMER TESTIMONIALS
         </h2>
-        <p className="mt-2 text-base sm:text-lg" style={{ color: colors.gray }}>
-          Trusted by hardware stores, contractors, and professionals across
-          India.
-        </p>
-      </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        {reviews.map((item, index) => (
-          <div
-            key={index}
-            className="p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 bg-white"
-            style={{
-              border: `1px solid ${colors.lightGray}40`,
-            }}
-          >
-            {/* Rating Stars */}
-            <div className="flex mb-3">
-              {[...Array(item.rating)].map((_, i) => (
-                <Star
-                  key={i}
-                  size={18}
-                  style={{ color: colors.primary }}
-                  fill={colors.primary}
-                />
-              ))}
-            </div>
-
-            <p
-              className="text-sm sm:text-base mb-4"
-              style={{ color: colors.dark }}
+        {/* Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-10">
+          {testimonials.map((t, i) => (
+            <div
+              key={i}
+              className="p-8 rounded-2xl shadow-md border"
+              style={{
+                backgroundColor: colors.light,
+                borderColor: colors.lightGray,
+              }}
             >
-              “{item.review}”
-            </p>
+              {/* Rating */}
+              <div className="flex justify-center mb-4">
+                {[...Array(t.rating)].map((_, idx) => (
+                  <Star
+                    key={idx}
+                    size={20}
+                    fill={colors.primary}
+                    color={colors.primary}
+                  />
+                ))}
+              </div>
 
-            <div className="mt-4">
-              <h3
-                className="font-semibold text-lg"
-                style={{ color: colors.black }}
+              {/* Review */}
+              <p
+                className="text-sm leading-relaxed mb-6 font-medium"
+                style={{ color: colors.dark }}
               >
-                {item.name}
+                "{t.review}"
+              </p>
+
+              {/* Name */}
+              <h3 className="text-lg font-bold" style={{ color: colors.black }}>
+                {t.name}
               </h3>
-              <p className="text-sm" style={{ color: colors.gray }}>
-                {item.location}
+
+              <p
+                className="text-xs font-medium opacity-70"
+                style={{ color: colors.gray }}
+              >
+                {t.role}
               </p>
             </div>
-          </div>
-        ))}
+          ))}
+        </div>
       </div>
     </section>
   );

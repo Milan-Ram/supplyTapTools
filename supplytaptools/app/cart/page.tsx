@@ -15,6 +15,7 @@ import {
   X,
 } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 /* -------------------------
     🔹 TYPES (IMPORTANT!)
@@ -143,7 +144,7 @@ export default function CartWishlistApp() {
     code: string;
     discount: number;
   } | null>(null);
-
+  const router = useRouter();
   /* -------------------------
       🔹 THEME OBJECT
   --------------------------*/
@@ -564,6 +565,9 @@ export default function CartWishlistApp() {
                     style={{
                       backgroundColor: colors.primary,
                       color: colors.black,
+                    }}
+                    onClick={() => {
+                      router.push("/checkout1");
                     }}
                   >
                     Proceed to Checkout

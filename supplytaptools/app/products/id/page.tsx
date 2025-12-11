@@ -19,6 +19,7 @@ import {
 } from "lucide-react";
 import { colors } from "@/styles/colors";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const product = {
   id: 1,
@@ -82,6 +83,7 @@ export default function ProductDetailPage() {
   const [activeTab, setActiveTab] = useState("specifications");
   const [isLiked, setIsLiked] = useState(false);
 
+  const router = useRouter();
   const incrementQuantity = () => {
     if (quantity < product.stockCount) {
       setQuantity(quantity + 1);
@@ -388,6 +390,9 @@ export default function ProductDetailPage() {
                 style={{
                   borderColor: colors.gray,
                   color: colors.white,
+                }}
+                onClick={() => {
+                  router.push("/checkout1");
                 }}
               >
                 Buy Now

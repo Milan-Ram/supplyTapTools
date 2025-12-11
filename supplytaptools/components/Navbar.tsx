@@ -1,8 +1,9 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { HeartIcon, Menu, ShoppingBag, X } from "lucide-react";
 import { colors } from "@/styles/colors";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface NavLink {
   name: string;
@@ -10,9 +11,9 @@ interface NavLink {
 }
 
 const navLinks: NavLink[] = [
-  { name: "Home", href: "#home" },
-  { name: "Products", href: "#products" },
-  { name: "About", href: "#about" },
+  { name: "Home", href: "/" },
+  { name: "Products", href: "/store" },
+  { name: "About", href: "/about" },
   { name: "Contact", href: "/contact" },
   { name: "Support", href: "#footer" },
 ];
@@ -22,6 +23,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState("Home");
   const [isDark, setIsDark] = useState(false);
+  const router = useRouter();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -49,18 +51,21 @@ export default function Navbar() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex items-center justify-between h-16">
             {/* Logo */}
-            <div className="flex-shrink-0 flex items-center gap-2">
-              <Link href="/">
-                <img
-                  src="/logo1.png"
-                  alt="SupplyTap Logo"
-                  className="h-10 w-auto"
-                />
-              </Link>
+            <div
+              className="flex-shrink-0 flex items-center md:gap-2"
+              onClick={() => {
+                router.push("/");
+              }}
+            >
+              <img
+                src="/logo1.png"
+                alt="SupplyTap Logo"
+                className=" h-9 md:h-10 w-auto"
+              />
 
               <a
                 href="#"
-                className="text-2xl ml-2 -mt-3 font-bold transition-all duration-300"
+                className=" text-xl md:text-2xl ml-2 -mt-3 font-bold transition-all duration-300"
                 style={{
                   color:
                     scrolled || isOpen
@@ -77,11 +82,13 @@ export default function Navbar() {
             {/* Desktop Navigation */}
             <div className="hidden md:flex md:items-center md:space-x-8">
               {navLinks.map((link) => (
-                <a
+                <span
                   key={link.name}
-                  href={link.href}
-                  onClick={() => setActiveLink(link.name)}
-                  className="relative py-2 text-sm font-medium transition-all duration-300 group"
+                  onClick={() => {
+                    setActiveLink(link.name);
+                    router.push(link.href);
+                  }}
+                  className="relative py-2 text-sm font-medium transition-all duration-300 group cursor-pointer"
                   style={{
                     color:
                       scrolled || isOpen
@@ -100,9 +107,27 @@ export default function Navbar() {
                     }`}
                     style={{ backgroundColor: colors.primary }}
                   />
-                </a>
+                </span>
               ))}
 
+              <HeartIcon
+                className={`${
+                  activeLink === "wishlist" ? "text-red-500" : "text-slate-300"
+                } cursor-pointer w-[20px]`}
+                onClick={() => {
+                  setActiveLink("wishlist");
+                  router.push("/wishlist");
+                }}
+              />
+              <ShoppingBag
+                className={`${
+                  activeLink === "cart" ? "text-yellow-500" : "text-slate-300"
+                } cursor-pointer w-[20px]`}
+                onClick={() => {
+                  setActiveLink("cart");
+                  router.push("/cart");
+                }}
+              />
               {/* Theme Toggle */}
               <button
                 onClick={toggleTheme}
@@ -113,16 +138,34 @@ export default function Navbar() {
             </div>
 
             {/* Mobile Menu Button */}
-            <div className="md:hidden flex items-center space-x-3">
+            <div className="md:hidden -mt-1 flex items-center space-x-4">
+              <HeartIcon
+                className={`${
+                  activeLink === "wishlist" ? "text-red-500" : "text-white"
+                } cursor-pointer w-[20px]`}
+                onClick={() => {
+                  setActiveLink("wishlist");
+                  router.push("/wishlist");
+                }}
+              />
+              <ShoppingBag
+                className={`${
+                  activeLink === "cart" ? "text-yellow-500" : "text-white"
+                } cursor-pointer w-[20px]`}
+                onClick={() => {
+                  setActiveLink("cart");
+                  router.push("/cart");
+                }}
+              />
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-lg transition-all duration-300"
+                className=" rounded-lg transition-all duration-300"
               >
                 {isDark ? "☀️" : "🌙"}
               </button>
               <button
                 onClick={toggleMenu}
-                className="p-2 rounded-lg transition-all duration-300 hover:scale-110"
+                className=" rounded-lg transition-all duration-300 hover:scale-110"
                 style={{
                   color: scrolled
                     ? isDark

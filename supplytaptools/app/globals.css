@@ -19,3 +19,18 @@ background-color: #f7f8fa;
 /* Hero overlay */
 .hero-overlay {
 background: linear-gradient(90deg, rgba(10,42,67,0.85), rgba(10,42,67,0.55))}
+
+/* custom scrollbar  */
+::-webkit-scrollbar {
+    width: 4px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #242424;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #ebdb00ff;
+}

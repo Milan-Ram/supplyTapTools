@@ -2,8 +2,11 @@
 
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 export default function Hero() {
+  const router = useRouter();
+
   return (
     <section className="relative h-[100vh] w-full overflow-hidden">
       {/* Background Image using Next.js Image */}
@@ -50,11 +53,21 @@ export default function Hero() {
           transition={{ delay: 0.3 }}
           className="mt-9 flex gap-4"
         >
-          <button className="px-6 py-3 bg-white text-gray-900 font-medium rounded-lg shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300">
+          <button
+            onClick={() => {
+              router.push("/store");
+            }}
+            className="px-6 py-3 bg-white text-gray-900 font-medium rounded-lg shadow-md hover:shadow-lg hover:-translate-y-1 transition-all duration-300"
+          >
             Explore Products
           </button>
 
-          <button className="px-6 py-3 border border-white text-white font-medium rounded-lg hover:bg-white/10 hover:-translate-y-1 transition-all duration-300">
+          <button
+            onClick={() => {
+              router.push("/contact");
+            }}
+            className="px-6 py-3 border border-white text-white font-medium rounded-lg hover:bg-white/10 hover:-translate-y-1 transition-all duration-300"
+          >
             Contact Us
           </button>
         </motion.div>

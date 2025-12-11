@@ -16,6 +16,7 @@ import {
 import { colors } from "@/styles/colors";
 import Image from "next/image";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 interface Product {
   id: number;
@@ -103,6 +104,7 @@ const categories: Category[] = [
 export default function HardwareProducts() {
   const [hoveredProduct, setHoveredProduct] = useState<number | null>(null);
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null);
+  const router = useRouter();
 
   return (
     <section
@@ -354,6 +356,9 @@ export default function HardwareProducts() {
               backgroundColor: "transparent",
               color: colors.white,
             }}
+            onClick={() => {
+              router.push("/store");
+            }}
           >
             <span className="text-sm font-bold tracking-wider uppercase">
               View All Products
@@ -395,6 +400,9 @@ export default function HardwareProducts() {
               style={{
                 backgroundColor: colors.primary,
                 color: colors.black,
+              }}
+              onClick={() => {
+                router.push("/contact");
               }}
             >
               Get Quote

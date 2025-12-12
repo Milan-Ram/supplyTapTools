@@ -222,6 +222,14 @@ export default function Navbar() {
                 {link.name}
               </a>
             ))}
+            <button
+              onClick={() => {
+                router.push("/auth/signin");
+              }}
+              className=" transition-all duration-300 hover:scale-105 hover:bg-yellow-300 text-sm -ml-3 px-5 py-1.5 bg-white rounded-2xl"
+            >
+              {isAuth ? "Hi User" : "Login"}
+            </button>
           </div>
         </div>
       </nav>

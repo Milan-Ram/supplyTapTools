@@ -46,6 +46,17 @@ const orderItems = [
     image: "/products/product2.jpg",
   },
 ];
+// Load Razorpay script
+const loadRazorpay = () => {
+  console.log("loading razorpay");
+  return new Promise((resolve) => {
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.onload = () => resolve(true);
+    script.onerror = () => resolve(false);
+    document.body.appendChild(script);
+  });
+};
 
 export default function CheckoutPage() {
   const [isDark, setIsDark] = useState(true);
@@ -167,6 +178,55 @@ export default function CheckoutPage() {
     });
     setEditingAddress(null);
     setShowAddressForm(false);
+  };
+  // Trigger Razorpay Payment
+  const handlePayment = async () => {
+    if (!selectedAddress) {
+      alert("Please select a delivery address.");
+      return;
+    }
+
+    const res = await loadRazorpay();
+    if (!res) {
+      alert("Razorpay SDK failed to load. Check your internet.");
+      return;
+    }
+
+    // ⚠️ Demo order — ideally this should come from your backend
+    const orderData = {
+      amount: total * 1000, // Razorpay uses paise
+      currency: "INR",
+    };
+
+    const options = {
+      key: "rzp_test_Rqj3YxzkR2AkYC",
+      amount: orderData.amount,
+      currency: "INR",
+      name: "SupplyTap Tools",
+      description: "Order Payment",
+      image: "/logo.png",
+      handler: function (response: any) {
+        console.log("Payment success", response);
+
+        alert("Payment Successful!");
+        // TODO: save order in Firebase or redirect to success page
+      },
+      prefill: {
+        name: addresses.find((a) => a.id === selectedAddress)?.name,
+        email: "user@example.com", // Replace with Firebase logged-in user email
+        contact: addresses.find((a) => a.id === selectedAddress)?.phone,
+      },
+      notes: {
+        address: "SupplyTap Tools Checkout",
+      },
+      theme: {
+        color: "#ffcc00",
+      },
+    };
+
+    // @ts-ignore
+    const paymentObject = new window.Razorpay(options);
+    paymentObject.open();
   };
 
   return (
@@ -667,6 +727,7 @@ export default function CheckoutPage() {
                 </div>
                 <button
                   disabled={!selectedAddress}
+                  onClick={handlePayment}
                   className="w-full py-4 font-bold text-sm tracking-wider uppercase transition-all duration-300 hover:opacity-90 disabled:opacity-50 disabled:cursor-not-allowed rounded-lg flex items-center justify-center gap-2"
                   style={{
                     backgroundColor: colors.primary,
@@ -677,6 +738,7 @@ export default function CheckoutPage() {
                   Proceed to Payment
                   <ArrowRight size={18} />
                 </button>
+
                 <p
                   className="text-xs text-center mt-4"
                   style={{ color: theme.textSecondary }}

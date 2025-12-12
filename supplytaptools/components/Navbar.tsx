@@ -23,6 +23,7 @@ export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [activeLink, setActiveLink] = useState("Home");
   const [isDark, setIsDark] = useState(false);
+  const [isAuth, setIsAuth] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -134,6 +135,14 @@ export default function Navbar() {
                 className="p-2 rounded-lg transition-all duration-300 hover:scale-110 bg-transparent"
               >
                 {isDark ? "☀️" : "🌙"}
+              </button>
+              <button
+                onClick={() => {
+                  router.push("/auth/signin");
+                }}
+                className=" transition-all duration-300 hover:scale-105 hover:bg-yellow-300 text-sm -ml-3 px-5 py-1.5 bg-white rounded-2xl"
+              >
+                {isAuth ? "Hi User" : "Login"}
               </button>
             </div>
 
